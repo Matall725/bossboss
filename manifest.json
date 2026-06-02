@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "BOSS Agent",
+  "version": "1.0.0",
+  "description": "AI Assistant for BOSS Zhipin",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["*://*.zhipin.com/*"],
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.zhipin.com/*"],
+      "js": ["src/content/index.ts"]
+    }
+  ],
+  "action": {
+    "default_popup": "index.html"
+  }
+}
