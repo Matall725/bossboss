@@ -40,7 +40,12 @@ function createPanel() {
 
   container.appendChild(status);
   container.appendChild(btn);
-  document.body.appendChild(container);
+
+  const host = document.createElement("div");
+  const shadowRoot = host.attachShadow({ mode: "open" });
+  shadowRoot.appendChild(container);
+
+  document.body.appendChild(host);
 }
 
 if (window.location.href.includes("job_detail")) {
