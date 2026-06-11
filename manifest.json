@@ -4,17 +4,22 @@
   "version": "1.0.0",
   "description": "AI Assistant for BOSS Zhipin",
   "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["*://*.zhipin.com/*"],
+  "host_permissions": ["*://*.zhipin.com/*", "*://*.deepseek.com/*", "*://*.openai.com/*", "*://*.moonshot.cn/*", "*://*.aliyuncs.com/*", "http://*/*", "https://*/*"],
   "background": {
     "service_worker": "src/background/index.ts",
     "type": "module"
   },
   "content_scripts": [
     {
-      "matches": ["*://*.zhipin.com/*"],
-      "js": ["src/content/index.ts"]
+      "matches": ["*://*.zhipin.com/web/geek/chat*", "*://*.zhipin.com/web/chat/*", "*://*.zhipin.com/web/user/chat/*"],
+      "js": ["src/content/chat-assistant.tsx"]
+    },
+    {
+      "matches": ["*://*.zhipin.com/job_detail/*"], "run_at": "document_idle",
+      "js": ["src/content/index.tsx"]
     }
   ],
+  "web_accessible_resources": [{"resources": ["pdf.worker.mjs"], "matches": ["<all_urls>"]}],
   "action": {
     "default_popup": "index.html"
   }

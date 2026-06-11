@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 为 shadow-dom 隔离一下基础样式 */
+:host {
+  all: initial;
+}

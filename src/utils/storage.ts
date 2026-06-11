@@ -1,19 +1,21 @@
 export interface UserSettings {
   apiKey: string;
-  provider: "openai" | "deepseek" | "custom";
-  baseUrl?: string;
+  baseUrl: string;
+  model: string;
   baseResume: string;
 }
 
 const DEFAULT_SETTINGS: UserSettings = {
   apiKey: "",
-  provider: "deepseek",
+  baseUrl: "https://api.deepseek.com/v1/chat/completions",
+  model: "deepseek-chat",
   baseResume: "",
 };
 
 export async function getSettings(): Promise<UserSettings> {
   const result = await chrome.storage.local.get("settings");
-  return result.settings || DEFAULT_SETTINGS;
+  // Merge missing defaults for backwards compatibility
+  return { ...DEFAULT_SETTINGS, ...(result.settings || {}) };
 }
 
 export async function saveSettings(settings: UserSettings): Promise<void> {
